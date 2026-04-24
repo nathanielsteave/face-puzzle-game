@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Face Puzzle | AI Vision</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/control_utils/control_utils.js"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div id="intro-screen">
+        <h1 class="intro-title">Face Puzzle</h1>
+        <p class="intro-subtitle">Interactive AI Vision Experience</p>
+
+        <div class="difficulty-selector">
+            <button class="seg-btn active" onclick="changeGrid(3, this)">3x3 Grid</button>
+            <button class="seg-btn" onclick="changeGrid(4, this)">4x4 Grid</button>
+            <button class="seg-btn" onclick="changeGrid(5, this)">5x5 Grid</button>
+            <button class="seg-btn" onclick="changeGrid(6, this)">6x6 Grid</button>
+        </div>
+
+        <button id="start-btn" class="btn-start" onclick="enterGame()" disabled>Loading AI Model...</button>
+        <div id="loading-text">Downloading WebAssembly modules...</div>
+    </div>
+
+    <div id="game-screen">
+        <div class="container">
+            <div id="success-overlay">
+                <div class="success-card">
+                    <div class="success-icon">🎉</div>
+                    <h3 class="success-title">Excellent!</h3>
+                    <p class="success-text">You have successfully reconstructed the image matrix.</p>
+                    <button class="action-btn btn-primary" style="width: 100%;" onclick="hideSuccessAndRestart()">Play
+                        Again</button>
+                </div>
+            </div>
+
+            <div class="video-wrapper">
+                <video id="input_video" autoplay playsinline></video>
+                <canvas id="output_canvas" width="1000" height="480"></canvas>
+            </div>
+
+            <div class="status-bar" id="status">Form a square with your hands.</div>
+
+            <div class="controls">
+                <button class="action-btn btn-primary" onclick="restartGame()">Restart Round</button>
+                <button class="action-btn btn-secondary" onclick="toggleTutorial()">How to Play</button>
+                <button class="action-btn btn-secondary" onclick="backToIntro()">Change Grid</button>
+            </div>
+
+            <div class="tutorial" id="tutorialPanel">
+                <p style="margin-bottom: 8px; font-weight: 600;">Gesture Controls</p>
+                <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.5;">
+                    1. <b>Capture:</b> Form a square with your index fingers and thumbs. Hold steady.<br>
+                    2. <b>Move:</b> Use your index finger to swipe in the air to move puzzle pieces.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js" defer></script>
+</body>
+
+</html>
